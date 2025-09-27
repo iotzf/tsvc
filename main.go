@@ -4,5 +4,23 @@
 
 package main
 
+import (
+	"fmt"
+
+	"github.com/iotzf/tsvc/pkg/shutdown"
+)
+
 func main() {
+	fmt.Println("t svc main endpoint")
+
+	// register shutdown hook, do something before shutdown
+	// default signals are SIGINT and SIGTERM
+	// you can add more signals by WithSignals method
+	// e.g. shutdown.NewHook().WithSignals(syscall.SIGHUP, syscall.SIGQUIT).Close(...)
+	// if you want to customize signals
+	// otherwise, just use shutdown.NewHook().Close(...)
+	shutdown.NewHook().Close(
+		func() {
+			fmt.Println("do something before shutdown")
+		})
 }
